@@ -1,0 +1,5 @@
+# Variables for identifying your server
+ENV.py
+
+__pycache__/
+*.py[cod]
