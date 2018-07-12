@@ -20,6 +20,11 @@ class Users(db.Model):
     db.session.add(new_user)
     db.session.commit()
 
+  def delete_user(_ID):
+    Users.query.filter_by(ID=_ID).delete()
+    db.session.commit()
+    return 'Success!'
+
   def get_all_users():
     all_users = []
     for e in Users.query.all():

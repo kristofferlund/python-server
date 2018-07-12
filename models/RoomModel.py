@@ -18,6 +18,11 @@ class Rooms(db.Model):
     db.session.add(new_room)
     db.session.commit()
 
+  def delete_room(_ID):
+    Rooms.query.filter_by(ID=_ID).delete()
+    db.session.commit()
+    return 'Success!'
+
   def get_all_rooms():
     all_rooms = []
     for e in Rooms.query.all():
