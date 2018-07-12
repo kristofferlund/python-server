@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request, abort
 from ENV import *
-from UserModel import *
+from models.UserModel import *
+from models.RoomModel import *
 
 import json
 
@@ -18,7 +19,7 @@ def create_user():
 
 # Get all users
 @app.route("/users")
-def get_all():
+def get_all_users():
     # Returns list of users
     return jsonify({'users': Users.get_all_users()})
 
@@ -31,21 +32,22 @@ def get_user_by_id(ID):
     # Returns user object
     return str(Users.get_user_by_id(ID))
 
+@app.route("/rooms")
+def get_all_rooms():
+    return jsonify({'rooms': Rooms.get_all_rooms()})
+
+@app.route("/rooms/<query>")
+def get_room_by_string(query):
+    return str(Rooms.get_room_by_string(query))
+
+@app.route("/rooms/<int:ID>")
+def get_room_by_id(ID):
+    return str(Rooms.get_room_by_id(ID))
+
 # Add room
 #@app.route("/books", methods=["POST"])
 #def add_room():
 #    return jsonify(request.get_json())
-
-# Get room
-#@app.route("/room", methods=["GET"])
-#def get_room_by_id():
-#    roomId = request.args.get('ID')
-#    row = cursor.execute("SELECT * FROM Rooms WHERE ID = %s" % roomId).fetchone()
-#    if row:
-#        return str(row) # Tupple format
-#    else:
-#        print ('There was no room to be found')
-#        abort(404)
 
 
 if __name__ == "__main__":
