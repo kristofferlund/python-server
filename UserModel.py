@@ -21,14 +21,16 @@ class Users(db.Model):
     db.session.commit()
 
   def get_all_users():
-    print (Users.query.all())
     all_users = []
     for e in Users.query.all():
       all_users.append(Users.json(e))
     return all_users
 
-  def get_user_by_dn(_displayName):
-    return User.query.filter_by(displayName=_displayName).first()
+  def get_user_by_string(_query):
+    return Users.query.filter((Users.displayName == _query) | (Users.firstName == _query) | (Users.lastName == _query)).first()
+
+  def get_user_by_id(_ID):
+    return Users.query.filter_by(ID=_ID).first()
 
   def __repr__(self):
     user_object = {

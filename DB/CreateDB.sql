@@ -4,10 +4,10 @@ IF OBJECT_ID('Users', 'U') IS NOT NULL
 -- Create User table
 CREATE TABLE Users
 (
-    ID INT IDENTITY(1,1) PRIMARY KEY,
+    DisplayName NVARCHAR(16) NOT NULL,
     FirstName   NVARCHAR(25) NOT NULL,
     LastName   NVARCHAR(25) NOT NULL,
-    DisplayName NVARCHAR(16) NOT NULL,
+    ID INT IDENTITY(1,1) PRIMARY KEY,
 )
 
 IF OBJECT_ID('Rooms', 'U') IS NOT NULL
@@ -16,6 +16,6 @@ IF OBJECT_ID('Rooms', 'U') IS NOT NULL
 -- Create Rooms table
 CREATE TABLE Rooms
 (
-    ID INT IDENTITY(1,1) PRIMARY KEY,
     RoomName   NVARCHAR(50) NOT NULL,
+    ID INT IDENTITY(1,1) PRIMARY KEY,
 ) 

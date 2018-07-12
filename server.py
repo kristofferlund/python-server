@@ -1,7 +1,8 @@
-from ENV import *
 from flask import Flask, jsonify, request, abort
-import json
+from ENV import *
 from UserModel import *
+
+import json
 
 @app.route("/")
 def main():
@@ -15,19 +16,20 @@ def create_user():
     Users.create_user(request_data['displayName'], request_data['firstName'], request_data['lastName'])
 
 
-# Get user
-@app.route("/users", methods=["GET"])
+# Get all users
+@app.route("/users")
 def get_all():
+    # Returns list of users
     return jsonify({'users': Users.get_all_users()})
 
-#def get_user_by_dn():
-#    display_name = request.args.get('DisplayName')
-#    print ("Looking for a user")
-#    row = cursor.execute("SELECT * FROM Users WHERE DisplayName = '%s" % str(display_name) +"'").fetchone()
-#    if row:
- #       return str(row)
-#    else:
-#        print ('No user with this DN')
+@app.route("/users/<query>")
+def get_user_by_string(query):
+    return str(Users.get_user_by_string(query))
+
+@app.route("/users/<int:ID>")
+def get_user_by_id(ID):
+    # Returns user object
+    return str(Users.get_user_by_id(ID))
 
 # Add room
 #@app.route("/books", methods=["POST"])
