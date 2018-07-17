@@ -11,12 +11,21 @@ class Users(db.Model):
   DisplayName = db.Column(db.String(16), nullable=False)
   FirstName = db.Column(db.String(25), nullable=False)
   LastName = db.Column(db.String(25), nullable=False)
+  UserName = db.Column(db.String(25), nullable=False)
+  Password = db.Column(db.String(80), nullable=False)
 
   def json(self):
-    return {'DisplayName': self.DisplayName, 'FirstName': self.FirstName, 'LastName': self.LastName, 'ID': self.ID}
+    return {
+      'DisplayName': self.DisplayName,
+      'FirstName': self.FirstName,
+      'LastName': self.LastName,
+      'UserName': self.UserName,
+      'Password': self.Password,
+      'ID': self.ID
+      }
   
-  def create_user(_displayName, _firstName, _lastName):
-    new_user = Users(DisplayName=_displayName, FirstName=_firstName, LastName=_lastName)
+  def create_user(_userName, _password, _displayName, _firstName, _lastName):
+    new_user = Users(UserName=_userName, Password=_password, DisplayName=_displayName, FirstName=_firstName, LastName=_lastName)
     db.session.add(new_user)
     db.session.commit()
 
@@ -38,11 +47,18 @@ class Users(db.Model):
     return Users.query.filter_by(ID=_ID).first()
 
   def __repr__(self):
-    user_object = {
+    return str({
       'displayName': self.DisplayName,
       'firstName': self.FirstName,
       'lastName': self.LastName,
+      'userName': self.UserName,
+      'password': self.Password,
       'ID': self.ID,
-      }
-    return json.dumps(user_object)
- 
+    })
+
+  def username_password_match(_userName, _password):
+    user = Users.query.filter_by(UserName=_userName).filter_by(Password=_password).first()
+    if user is None:
+      return False
+    else:
+      return True
